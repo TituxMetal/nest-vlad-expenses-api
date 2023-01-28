@@ -1,9 +1,12 @@
-export class AuthService {
-  signup() {
-    const message = { message: 'Signup method' }
-    console.log(message)
+import { AuthDto } from './dto'
 
-    return message
+export class AuthService {
+  signup({ email, password }: AuthDto) {
+    const user = { id: 1, email }
+
+    console.log({ ...user, password })
+
+    return user
   }
 
   login() {
