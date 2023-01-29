@@ -33,10 +33,25 @@ export class AuthService {
     }
   }
 
-  login() {
-    const message = { message: 'Login method' }
-    console.log(message)
+  async login({ email, password }: AuthDto) {
+    const user = await this.prisma.user.findUnique({ where: { email } })
 
-    return message
+    if (!user) {
+      throw new UnauthorizedException('Invalid Credentials.', {
+        cause: new Error('Unique Constraint.'),
+        description: 'Cannot Authenticate User.'
+      })
+    }
+
+    const passwordMatches = await argon.verify(user.hash, password)
+
+    if (!passwordMatches) {
+      throw new UnauthorizedException('Invalid Credentials.', {
+        cause: new Error('Unique Constraint.'),
+        description: 'Cannot Authenticate User.'
+      })
+    }
+
+    return { id: user.id, email: user.email }
   }
 }
