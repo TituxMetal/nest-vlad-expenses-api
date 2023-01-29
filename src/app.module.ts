@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { APP_INTERCEPTOR } from '@nestjs/core'
 
-import { AuthModule } from '~/auth'
+import { AuthModule, TransformInterceptor } from '~/auth'
 import { PrismaModule } from '~/prisma'
 
 @Module({
@@ -11,6 +12,6 @@ import { PrismaModule } from '~/prisma'
     PrismaModule
   ],
   controllers: [],
-  providers: []
+  providers: [{ provide: APP_INTERCEPTOR, useClass: TransformInterceptor }]
 })
 export class AppModule {}
