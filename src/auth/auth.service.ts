@@ -5,19 +5,20 @@ import * as argon from 'argon2'
 import { PrismaService } from '~/prisma'
 
 import { AuthDto } from './dto'
+import { UserEntity } from './entity'
 
 @Injectable()
 export class AuthService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async signup({ email, password }: AuthDto) {
+  async signup({ email, password }: AuthDto): Promise<UserEntity> {
     try {
       const hash = await argon.hash(password)
       const newUser = await this.prisma.user.create({
         data: { email, hash }
       })
 
-      return { id: newUser.id, email: newUser.email }
+      return new UserEntity(newUser)
     } catch (error) {
       if (
         error instanceof PrismaClientKnownRequestError &&
@@ -33,7 +34,7 @@ export class AuthService {
     }
   }
 
-  async login({ email, password }: AuthDto) {
+  async login({ email, password }: AuthDto): Promise<UserEntity> {
     const user = await this.prisma.user.findUnique({ where: { email } })
 
     if (!user) {
@@ -52,6 +53,6 @@ export class AuthService {
       })
     }
 
-    return { id: user.id, email: user.email }
+    return new UserEntity(user)
   }
 }
