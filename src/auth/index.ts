@@ -1,2 +1,6 @@
 export { AuthModule } from './auth.module'
+export * from './decorator'
+export * from './entity'
+export * from './guard'
 export * from './interceptor'
+export * from './types'
