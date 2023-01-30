@@ -1,10 +1,12 @@
 import { Body, Controller, Post, Session } from '@nestjs/common'
 
 import { AuthService } from './auth.service'
+import { PublicRoute } from './decorator'
 import { AuthDto } from './dto'
 import { UserEntity } from './entity'
 import { UserSession, UserSessionData } from './types'
 
+@PublicRoute()
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authSerivce: AuthService) {}
