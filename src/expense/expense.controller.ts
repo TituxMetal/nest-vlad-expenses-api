@@ -1,12 +1,15 @@
 import {
   Body,
+  CacheInterceptor,
+  CacheTTL,
   Controller,
   Delete,
   Get,
   Param,
   Patch,
   Post,
-  Query
+  Query,
+  UseInterceptors
 } from '@nestjs/common'
 import { Expense } from '@prisma/client'
 
@@ -20,6 +23,8 @@ import { ExpenseService } from './expense.service'
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
   @Get()
   async getAllByUserId(
     @GetUserId() userId: string,
