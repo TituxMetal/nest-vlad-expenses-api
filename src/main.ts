@@ -14,7 +14,13 @@ async function bootstrap() {
   app.use(
     session({ secret: sessionSecret, resave: false, saveUninitialized: false })
   )
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      transformOptions: { enableImplicitConversion: true }
+    })
+  )
 
   const port = config.getOrThrow<number>('PORT')
 
