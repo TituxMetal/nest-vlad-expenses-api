@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common'
 import { Expense } from '@prisma/client'
 
+import { PaginateDto, PaginateResultType } from '~/common'
 import { PrismaService } from '~/prisma'
 
 import { CreateDto, UpdateDto } from './dto'
@@ -13,8 +14,19 @@ import { CreateDto, UpdateDto } from './dto'
 export class ExpenseService {
   constructor(private readonly prisma: PrismaService) {}
 
-  getAllByUserId(userId: string): Promise<Expense[]> {
-    return this.prisma.expense.findMany({ where: { userId } })
+  async getAllByUserId(
+    userId: string,
+    { limit, offset }: PaginateDto
+  ): Promise<PaginateResultType> {
+    const expenses = await this.prisma.expense.findMany({
+      where: { userId },
+      take: limit,
+      skip: offset
+    })
+    const count = await this.prisma.expense.count({ where: { userId } })
+    const hasMore = count > limit + offset
+
+    return { data: expenses, count, hasMore }
   }
 
   async getUserExpenseById(
