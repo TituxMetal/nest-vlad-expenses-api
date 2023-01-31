@@ -5,11 +5,13 @@ import {
   Get,
   Param,
   Patch,
-  Post
+  Post,
+  Query
 } from '@nestjs/common'
 import { Expense } from '@prisma/client'
 
 import { GetUserId } from '~/auth'
+import { PaginateDto, PaginateResultType } from '~/common'
 
 import { CreateDto, UpdateDto } from './dto'
 import { ExpenseService } from './expense.service'
@@ -19,8 +21,11 @@ export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
 
   @Get()
-  async getAllByUserId(@GetUserId() userId: string): Promise<Expense[]> {
-    const expenses = await this.expenseService.getAllByUserId(userId)
+  async getAllByUserId(
+    @GetUserId() userId: string,
+    @Query() paginate: PaginateDto
+  ): Promise<PaginateResultType> {
+    const expenses = await this.expenseService.getAllByUserId(userId, paginate)
 
     return expenses
   }
