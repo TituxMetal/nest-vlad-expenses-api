@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { CacheModule, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 
@@ -10,6 +10,7 @@ import { UserModule } from '~/user'
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, cache: true }),
+    CacheModule.register({ isGlobal: true }),
     AuthModule,
     PrismaModule,
     UserModule,
