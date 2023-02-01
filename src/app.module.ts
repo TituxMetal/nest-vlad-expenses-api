@@ -1,6 +1,8 @@
 import { CacheModule, Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
+import * as redisStore from 'cache-manager-redis-store'
+import { RedisClientOptions } from 'redis'
 
 import { AuthModule, SessionGuard, TransformInterceptor } from '~/auth'
 import { ExpenseModule } from '~/expense'
@@ -10,7 +12,14 @@ import { UserModule } from '~/user'
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, cache: true }),
-    CacheModule.register({ isGlobal: true }),
+    CacheModule.registerAsync<RedisClientOptions>({
+      isGlobal: true,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        store: redisStore,
+        url: config.getOrThrow('REDIS_URL')
+      })
+    }),
     AuthModule,
     PrismaModule,
     UserModule,
