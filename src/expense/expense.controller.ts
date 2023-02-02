@@ -53,7 +53,6 @@ export class ExpenseController {
     @GetUserId() userId: string,
     @Body() dto: CreateDto
   ): Promise<Expense> {
-    console.log({ userId, dto })
     const newExpense = await this.expenseService.create(userId, dto)
 
     return newExpense
