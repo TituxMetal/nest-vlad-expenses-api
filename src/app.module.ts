@@ -1,6 +1,7 @@
 import { CacheModule, Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
+import { ScheduleModule } from '@nestjs/schedule'
 import * as redisStore from 'cache-manager-redis-store'
 import { RedisClientOptions } from 'redis'
 
@@ -8,6 +9,8 @@ import { AuthModule, SessionGuard, TransformInterceptor } from '~/auth'
 import { ExpenseModule } from '~/expense'
 import { PrismaModule } from '~/prisma'
 import { UserModule } from '~/user'
+
+import { SchedulerModule } from './scheduler'
 
 @Module({
   imports: [
@@ -20,10 +23,12 @@ import { UserModule } from '~/user'
         url: config.getOrThrow('REDIS_URL')
       })
     }),
+    ScheduleModule.forRoot(),
     AuthModule,
     PrismaModule,
     UserModule,
-    ExpenseModule
+    ExpenseModule,
+    SchedulerModule
   ],
   controllers: [],
   providers: [
