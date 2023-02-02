@@ -7,8 +7,11 @@ export class UserEntity {
   @Exclude()
   hash: string
 
-  firstName?: string
-  lastName?: string
+  firstName: string | null
+  lastName: string | null
+
+  initialBalance: number
+  currentBalance: number
 
   createdAt: Date
   updatedAt: Date
