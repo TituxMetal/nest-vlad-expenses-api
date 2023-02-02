@@ -19,10 +19,13 @@ model User {
   firstName String?
   lastName  String?
 
+  initialBalance Int @default(2000)
+  currentBalance Int @default(2000)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Expense Expense[]
+  expenses Expense[]
 
   @@map("user")
 }
