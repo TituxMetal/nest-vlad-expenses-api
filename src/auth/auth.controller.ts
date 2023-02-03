@@ -16,11 +16,11 @@ export class AuthController {
     @Body() authDto: AuthDto,
     @Session() session: UserSession
   ): Promise<UserEntity> {
-    const { id, email } = await this.authSerivce.signup(authDto)
+    const { id, email, role } = await this.authSerivce.signup(authDto)
 
-    this.serializeSession({ id, email }, session)
+    this.serializeSession({ id, email, role }, session)
 
-    return new UserEntity({ id, email })
+    return new UserEntity({ id, email, role })
   }
 
   @Post('login')
@@ -28,11 +28,11 @@ export class AuthController {
     @Body() authDto: AuthDto,
     @Session() session: UserSession
   ): Promise<UserEntity> {
-    const { id, email } = await this.authSerivce.login(authDto)
+    const { id, email, role } = await this.authSerivce.login(authDto)
 
-    this.serializeSession({ id, email }, session)
+    this.serializeSession({ id, email, role }, session)
 
-    return new UserEntity({ id, email })
+    return new UserEntity({ id, email, role })
   }
 
   private serializeSession(
