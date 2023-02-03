@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client'
 import { Exclude } from 'class-transformer'
 
 export class UserEntity {
@@ -12,6 +13,10 @@ export class UserEntity {
 
   initialBalance: number
   currentBalance: number
+
+  _count: { expenses: number }
+
+  role: Role
 
   createdAt: Date
   updatedAt: Date
