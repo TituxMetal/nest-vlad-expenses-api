@@ -5,7 +5,12 @@ import { ScheduleModule } from '@nestjs/schedule'
 import * as redisStore from 'cache-manager-redis-store'
 import { RedisClientOptions } from 'redis'
 
-import { AuthModule, SessionGuard, TransformInterceptor } from '~/auth'
+import {
+  AdminGuard,
+  AuthModule,
+  SessionGuard,
+  TransformInterceptor
+} from '~/auth'
 import { ExpenseModule } from '~/expense'
 import { PrismaModule } from '~/prisma'
 import { UserModule } from '~/user'
@@ -33,7 +38,8 @@ import { SchedulerModule } from './scheduler'
   controllers: [],
   providers: [
     { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
-    { provide: APP_GUARD, useClass: SessionGuard }
+    { provide: APP_GUARD, useClass: SessionGuard },
+    { provide: APP_GUARD, useClass: AdminGuard }
   ]
 })
 export class AppModule {}
