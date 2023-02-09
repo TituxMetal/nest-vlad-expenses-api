@@ -9,8 +9,10 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('me')
-  getMe(@GetUserId() userId: string): Promise<UserEntity> {
-    return this.userService.getMe(userId)
+  async getMe(@GetUserId() userId: string): Promise<UserEntity> {
+    const user = await this.userService.getMe(userId)
+
+    return new UserEntity(user)
   }
 
   @AdminRoute()

@@ -24,9 +24,13 @@ export class ExpenseService {
       skip: offset
     })
     const count = await this.prisma.expense.count({ where: { userId } })
-    const hasMore = count > limit + offset
+    const hasMore = this.hasMore(count, limit, offset)
 
     return { data: expenses, count, hasMore }
+  }
+
+  private hasMore(count: number, limit: number, offset: number): boolean {
+    return count > limit + offset
   }
 
   async getUserExpenseById(
