@@ -39,7 +39,6 @@ export class AuthService {
 
     if (!user) {
       throw new UnauthorizedException('Invalid Credentials.', {
-        cause: new Error('Unique Constraint.'),
         description: 'Cannot Authenticate User.'
       })
     }
@@ -48,7 +47,6 @@ export class AuthService {
 
     if (!passwordMatches) {
       throw new UnauthorizedException('Invalid Credentials.', {
-        cause: new Error('Unique Constraint.'),
         description: 'Cannot Authenticate User.'
       })
     }
