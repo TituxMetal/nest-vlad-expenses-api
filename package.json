@@ -29,7 +29,7 @@
     "@nestjs/config": "2.3.2",
     "@nestjs/core": "9.4.2",
     "@nestjs/platform-express": "9.4.2",
-    "@nestjs/schedule": "2.2.2",
+    "@nestjs/schedule": "2.2.3",
     "@prisma/client": "4.14.1",
     "argon2": "0.30.3",
     "cache-manager": "5.2.1",
