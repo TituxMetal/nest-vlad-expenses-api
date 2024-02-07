@@ -38,7 +38,7 @@
     "class-validator": "0.14.1",
     "connect-redis": "7.1.1",
     "express-session": "1.18.0",
-    "redis": "4.6.12",
+    "redis": "4.6.13",
     "reflect-metadata": "0.2.1",
     "rxjs": "7.8.1"
   },
