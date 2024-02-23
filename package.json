@@ -31,7 +31,7 @@
     "@nestjs/platform-express": "9.4.3",
     "@nestjs/schedule": "4.0.1",
     "@prisma/client": "4.16.2",
-    "argon2": "0.31.2",
+    "argon2": "0.40.1",
     "cache-manager": "5.4.0",
     "cache-manager-redis-store": "2.0.0",
     "class-transformer": "0.5.1",
